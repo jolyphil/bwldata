@@ -34,8 +34,17 @@ bwl_results <- bwl_results_raw %>%
                                 bundesland == 14 ~ "SN",
                                 bundesland == 15 ~ "ST",
                                 bundesland == 16 ~ "TH"),
-         bundesland = factor(bundesland)) %>%
+         bundesland = factor(bundesland),
+         region = case_when(bundesland == "BB" ~ "Ost",
+                            bundesland == "MV" ~ "Ost",
+                            bundesland == "SN" ~ "Ost",
+                            bundesland == "ST" ~ "Ost",
+                            bundesland == "TH" ~ "Ost",
+                            bundesland == "BE" ~ "Berlin",
+                            TRUE ~ "West"),
+         region  = factor(region, levels = c("West", "Ost", "Berlin"))) %>%
   select(bundesland,
+         region,
          wkrnum,
          wkrname,
          wb)
